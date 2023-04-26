@@ -36,3 +36,5 @@ build/
 ### Other ###
 !**/src/main/resources/talablar.txt
 !**/talablar.txt
+
+src/main/resources/talablar.txt
