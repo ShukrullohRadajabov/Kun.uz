@@ -3,11 +3,9 @@ package com.company.controller;
 import com.company.service.AttachService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -21,4 +19,30 @@ public class AttachController {
         String fileName = attachService.saveToSystem(file);
         return ResponseEntity.ok().body(fileName);
     }
+
+    @GetMapping(value = "/open/{fileName}" , produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] open(@PathVariable("fileName") String fileName){
+        if(fileName != null && fileName.length()>0){
+            try {
+                return this.attachService.loadImage(fileName);
+            }catch (Exception e){
+                e.printStackTrace();
+                return new byte[0];
+            }
+        }
+        return null;
+    }
+
+    @GetMapping(value = "/open_general/{fileName}", produces = MediaType.ALL_VALUE)
+    public byte[] open_general(@PathVariable("fileName") String fileName) {
+        return attachService.open_general(fileName);
+    }
+
+
+    @DeleteMapping("/delete/{fineName}")
+    public ResponseEntity<Boolean> delete(@PathVariable("fineName") String fileName) {
+        boolean delete = attachService.delete(fileName);
+        return ResponseEntity.ok(delete);
+    }
+
 }

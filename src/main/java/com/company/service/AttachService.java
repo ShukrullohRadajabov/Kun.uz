@@ -1,10 +1,15 @@
 package com.company.service;
 
+import com.company.entity.AttachEntity;
+import com.company.exceptions.ItemNotFoundException;
 import com.company.repository.AttachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,5 +37,55 @@ public class AttachService {
         }
         return null;
     }
+
+    public byte[] loadImage(String fileName) {
+        byte[] imageInByte;
+
+        BufferedImage originalImage;
+        try {
+            originalImage = ImageIO.read(new File("attaches/" + fileName));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(originalImage, "png", baos);
+            baos.flush();
+            imageInByte = baos.toByteArray();
+            baos.close();
+            return imageInByte;
+        } catch (Exception e) {
+            return new byte[0];
+        }
+    }
+
+
+    public byte[] open_general(String attachName) {
+        byte[] data;
+        try {
+            Path file = Paths.get("attaches/" + attachName);
+            data = Files.readAllBytes(file);
+            return data;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
+
+
+    public boolean delete(String fileName) {
+        try {
+            int lastIndex = fileName.lastIndexOf(".");
+            String id = fileName.substring(0, lastIndex);
+            AttachEntity attachEntity = get(id);
+            Path file = Paths.get("attaches/" + attachEntity.getPath() + "/" + fileName);
+            return Files.deleteIfExists(file);
+        } catch (IOException e) {
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
+    }
+
+    public AttachEntity get(String id) {
+        return attachRepository.findById(id).orElseThrow(() -> {
+            throw new ItemNotFoundException("Attach not found");
+        });
+    }
+
 
 }

@@ -16,3 +16,6 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="aaa.mp4"
 
 < C:\Users\USer\Videos\aaa.mp4
+
+### delete
+DELETE http://localhost:8080/api/v1/attach/delete/mix.jpg
