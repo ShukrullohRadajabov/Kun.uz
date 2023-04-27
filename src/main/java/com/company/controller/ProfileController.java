@@ -35,6 +35,32 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.create(dto, jwtDTO.getId()));
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ProfileDTO> update(@PathVariable("id") Integer id, @RequestBody ProfileDTO dto,
+                                             @RequestHeader("Authorization") String authorization){
+        String[] str = authorization.split(" ");
+        String jwt = str[1];
+        JwtDTO jwtDTO = JwtUtil.decode(jwt);
+        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
+            throw new MethodNotAllowedException("Method not allowed");
+        }
+        return ResponseEntity.ok(profileService.update(id,dto));
+    }
+
+    @PutMapping("/update2/{id}")
+    public ResponseEntity<ProfileDTO> update2(@PathVariable("id") Integer id, @RequestBody ProfileDTO dto,
+                                             @RequestHeader("Authorization") String authorization){
+        String[] str = authorization.split(" ");
+        String jwt = str[1];
+        JwtDTO jwtDTO = JwtUtil.decode(jwt);
+        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
+            throw new MethodNotAllowedException("Method not allowed");
+        }
+        return ResponseEntity.ok(profileService.update(id,dto));
+    }
+
+
+
     @GetMapping("")
     public ResponseEntity<List<ProfileDTO>> getAll() {
         return null;

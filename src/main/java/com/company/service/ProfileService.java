@@ -9,6 +9,8 @@ import com.company.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProfileService {
     @Autowired
@@ -53,4 +55,23 @@ public class ProfileService {
     }
 
 
+    public ProfileDTO update(Integer id, ProfileDTO dto) {
+        Optional<ProfileEntity> optional = profileRepository.findById(id);
+
+        if (optional.isEmpty()) {
+            throw new AppBadRequestException("Profile is empty");
+        }
+        ProfileEntity entity = optional.get();
+        entity.setName(dto.getName());
+        entity.setSurname(dto.getSurname());
+        entity.setPhone(dto.getPhone());
+        entity.setEmail(dto.getEmail());
+        entity.setRole(dto.getRole());
+        entity.setPassword(MD5Util.getMd5Hash(dto.getPassword()));
+        entity.setVisible(true);
+        entity.setStatus(GeneralStatus.ACTIVE);
+        profileRepository.save(entity); // save profile
+        dto.setId(entity.getId());
+        return dto;
+    }
 }

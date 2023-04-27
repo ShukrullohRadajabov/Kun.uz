@@ -11,3 +11,35 @@ Content-Type:  application/json
   "password": "123",
   "role": "MODERATOR"
 }
+
+
+### Update profle
+PUT localhost:8080/api/v1/profile/update/7
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI1OTAzMTYsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI2NzY3MTYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.1hOMfV-OMesPyjjy5ZRDLOWvheGlsPDlCLbZTqTFVowi1_C-Z-2cZt6Mudr0YeDoi4qFCMwsQDpnpGXJfnEYwQ
+Content-Type:  application/json
+
+{
+  "name": "Abs",
+  "surname": "Bas",
+  "email": "abs@mail.com",
+  "phone": "2222",
+  "password": "12345",
+  "role": "MODERATOR"
+}
+
+
+### Update profle2
+PUT localhost:8080/api/v1/profile/update2/7
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI1OTAzMTYsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI2NzY3MTYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.1hOMfV-OMesPyjjy5ZRDLOWvheGlsPDlCLbZTqTFVowi1_C-Z-2cZt6Mudr0YeDoi4qFCMwsQDpnpGXJfnEYwQ
+Content-Type:  application/json
+
+{
+  "name": "Salom",
+  "surname": "Hello",
+  "email": "hello@mail.com",
+  "phone": "12122",
+  "password": "12345",
+  "role": "MODERATOR"
+}
+
+

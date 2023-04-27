@@ -38,7 +38,7 @@ public class AuthService {
         return authResponseDTO;
     }
 
-    public Object registration(ProfileDTO dto) {
+    public ProfileDTO registration(ProfileDTO dto) {
         ProfileEntity entity = new ProfileEntity();
         isValidProfile(dto);
         entity.setName(dto.getName());

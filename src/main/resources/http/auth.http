@@ -15,7 +15,7 @@ Content-Type:  application/json
 {
   "name": "User",
   "surname": "Userov",
-  "email": "user@mail.ru",
+  "email": "user1@mail.ru",
   "phone": "12345",
   "password": "123"
 }
