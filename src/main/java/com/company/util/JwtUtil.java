@@ -45,4 +45,7 @@ public class JwtUtil {
     }
 
 
+    public static JwtDTO getJwtUtil(String authorization, ProfileRole moderator) {
+        return null;
+    }
 }

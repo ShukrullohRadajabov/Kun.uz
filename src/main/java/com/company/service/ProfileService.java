@@ -74,4 +74,10 @@ public class ProfileService {
         dto.setId(entity.getId());
         return dto;
     }
+
+    public ProfileEntity get(Integer moderId) {
+        Optional<ProfileEntity> byId = profileRepository.findById(moderId);
+
+        return null;
+    }
 }
