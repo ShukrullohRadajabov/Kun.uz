@@ -1,0 +1,38 @@
+### Create region
+POST localhost:8080/api/v1/region
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+Content-Type:  application/json
+
+{
+  "nameUZ": "Toshkent",
+  "nameRU": "Ташкент",
+  "nameEN": "Tashkent"
+}
+
+
+
+### Update region
+PUT localhost:8080/api/v1/region/update/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+Content-Type:  application/json
+
+{
+  "nameUZ": "Samarqand",
+  "nameRU": "Самарканд",
+  "nameEN": "Samarkand"
+}
+
+
+### Delete region byId
+DELETE localhost:8080/api/v1/region/delete/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+
+
+### Region List
+GET localhost:8080/api/v1/region/list
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+
+
+### Get region langName
+PUT localhost:8080/api/v1/region//getByLang/nameUZ
+

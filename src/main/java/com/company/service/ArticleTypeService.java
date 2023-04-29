@@ -1,47 +1,37 @@
 package com.company.service;
 
-import com.company.dto.ProfileDTO;
-import com.company.dto.RegionDTO;
-import com.company.entity.ProfileEntity;
-import com.company.entity.RegionEntity;
-import com.company.enums.GeneralStatus;
+import com.company.dto.ArticleTypeDTO;
+import com.company.entity.ArticleTypeEntity;
 import com.company.exceptions.AppBadRequestException;
 import com.company.exceptions.ItemNotFoundException;
-import com.company.exceptions.MethodNotAllowedException;
-import com.company.repository.ProfileRepository;
+import com.company.repository.ArticleTypeRepository;
 import com.company.repository.RegionRepository;
-import com.company.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.xml.stream.events.DTD;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RegionService {
+public class ArticleTypeService {
     @Autowired
-    private RegionRepository regionRepository;
+    private ArticleTypeRepository articleTypeRepository;
 
-    public RegionDTO create(RegionDTO dto) {
-        RegionEntity entity = new RegionEntity();
+    public ArticleTypeDTO create(ArticleTypeDTO dto) {
+        ArticleTypeEntity entity = new ArticleTypeEntity();
         isValidRegion(dto);
         entity.setNameUZ(dto.getNameUZ());
         entity.setNameRU(dto.getNameRU());
         entity.setNameEN(dto.getNameEN());
-        regionRepository.save(entity);
+        articleTypeRepository.save(entity);
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setVisible(Boolean.TRUE);
         dto.setId(entity.getId());
         return dto;
     }
 
-    public void isValidRegion(RegionDTO dto) {
+    public void isValidRegion(ArticleTypeDTO dto) {
         if (dto.getNameUZ() == null || dto.getNameUZ().isBlank()) {
             throw new AppBadRequestException("Name uz qani?");
         }
@@ -53,17 +43,17 @@ public class RegionService {
         }
     }
 
-    public RegionDTO update(Integer id, RegionDTO dto) {
+    public ArticleTypeDTO update(Integer id, ArticleTypeDTO dto) {
         isValidRegion(dto);
-        Optional<RegionEntity> optional = regionRepository.findById(id);
+        Optional<ArticleTypeEntity> optional = articleTypeRepository.findById(id);
         if (optional.isEmpty()) {
             throw new AppBadRequestException("Region is empty");
         }
-        RegionEntity entity = optional.get();
+        ArticleTypeEntity entity = optional.get();
         entity.setNameUZ(dto.getNameUZ());
         entity.setNameRU(dto.getNameRU());
         entity.setNameEN(dto.getNameEN());
-        regionRepository.save(entity);
+        articleTypeRepository.save(entity);
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setVisible(Boolean.TRUE);
         dto.setId(entity.getId());
@@ -71,24 +61,24 @@ public class RegionService {
     }
 
     public boolean deleteProfile(Integer id) {
-        Optional<RegionEntity> byId = regionRepository.findById(id);
+        Optional<ArticleTypeEntity> byId = articleTypeRepository.findById(id);
         if (byId.isEmpty()) {
             throw new ItemNotFoundException("Region not found");
         }
-        regionRepository.deleteById(id);
+        articleTypeRepository.deleteById(id);
         return true;
     }
 
-    public RegionEntity get(Integer moderId) {
-        Optional<RegionEntity> byId = regionRepository.findById(moderId);
+    public ArticleTypeEntity get(Integer moderId) {
+        Optional<ArticleTypeEntity> byId = articleTypeRepository.findById(moderId);
         return null;
     }
 
-    public List<RegionDTO> getList() {
-        List<RegionDTO> dtoList = new LinkedList<>();
-        Iterable<RegionEntity> regionList = regionRepository.findAll();
-        for (RegionEntity entity : regionList) {
-            RegionDTO dto = new RegionDTO();
+    public List<ArticleTypeDTO> getList() {
+        List<ArticleTypeDTO> dtoList = new LinkedList<>();
+        Iterable<ArticleTypeEntity> regionList = articleTypeRepository.findAll();
+        for (ArticleTypeEntity entity : regionList) {
+            ArticleTypeDTO dto = new ArticleTypeDTO();
             dto.setId(entity.getId());
             dto.setNameUZ(entity.getNameUZ());
             dto.setNameRU(entity.getNameRU());
@@ -100,14 +90,14 @@ public class RegionService {
         return dtoList;
     }
 
-   /* public List<RegionDTO> getByLang(String lang) {
-        List<RegionDTO> dtoList = new LinkedList<>();
+   /* public List<ArticleTypeDTO> getByLang(String lang) {
+        List<ArticleTypeDTO> dtoList = new LinkedList<>();
         switch (lang) {
             case "nameUZ" -> {
-                List<RegionEntity> allByNameUZ = regionRepository.findAllByNameUZ();
+                List<ArticleTypeEntity> allByNameUZ = articleTypeRepository.findAllByNameUZ();
                 if(!allByNameUZ.isEmpty()){
-                    for (RegionEntity entity : allByNameUZ) {
-                        RegionDTO dto = new RegionDTO();
+                    for (ArticleTypeEntity entity : allByNameUZ) {
+                        ArticleTypeDTO dto = new ArticleTypeDTO();
                         dto.setId(entity.getId());
                         dto.setName(entity.getNameUZ());
                         dto.setVisible(entity.getVisible());
@@ -119,10 +109,10 @@ public class RegionService {
                 return dtoList;
             }
             case "nameEN" -> {
-                List<RegionEntity> allByNameEN = regionRepository.findAllByNameEN();
+                List<ArticleTypeEntity> allByNameEN = articleTypeRepository.findAllByNameEN();
                 if(!allByNameEN.isEmpty()){
-                    for (RegionEntity entity : allByNameEN) {
-                        RegionDTO dto = new RegionDTO();
+                    for (ArticleTypeEntity entity : allByNameEN) {
+                        ArticleTypeDTO dto = new ArticleTypeDTO();
                         dto.setId(entity.getId());
                         dto.setName(entity.getNameUZ());
                         dto.setVisible(entity.getVisible());
@@ -134,10 +124,10 @@ public class RegionService {
                 return dtoList;
             }
             case "nameRU" -> {
-                List<RegionEntity> allByNameRU = regionRepository.findAllByNameRU();
+                List<ArticleTypeEntity> allByNameRU = articleTypeRepository.findAllByNameRU();
                 if(!allByNameRU.isEmpty()){
-                    for (RegionEntity entity : allByNameRU) {
-                        RegionDTO dto = new RegionDTO();
+                    for (ArticleTypeEntity entity : allByNameRU) {
+                        ArticleTypeDTO dto = new ArticleTypeDTO();
                         dto.setId(entity.getId());
                         dto.setName(entity.getNameUZ());
                         dto.setVisible(entity.getVisible());
@@ -156,13 +146,13 @@ public class RegionService {
     public List<String> getByLang(String lang) {
         switch (lang){
             case "nameUZ":
-                List<String> listUz = regionRepository.findAllByNameUzOrderByCreatedDate();
+                List<String> listUz = articleTypeRepository.findAllByNameUzOrderByCreatedDate();
                 return listUz;
             case "nameRU":
-                List<String> listRu = regionRepository.findAllByNameRuOrderByCreatedDate();
+                List<String> listRu = articleTypeRepository.findAllByNameRuOrderByCreatedDate();
                 return listRu;
             case "nameEN":
-                List<String> listEng = regionRepository.findAllByNameEngOrderByCreatedDate();
+                List<String> listEng = articleTypeRepository.findAllByNameEngOrderByCreatedDate();
                 return listEng;
         }
         return null;

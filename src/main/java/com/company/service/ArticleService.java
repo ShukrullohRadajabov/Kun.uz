@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArticleService {
     private ProfileService profileService;
-    private RegionService regionService;
+//    private RegionService regionService;
     private CategoryService categoryService;
     private ArticleRepository articleRepository;
     public ArticleRequestDTO create(ArticleRequestDTO dto, Integer moderId) {
         // check
         ProfileEntity moderator = profileService.get(moderId);
-        RegionEntity region = regionService.get(dto.getRegionId());
+//        RegionEntity region = regionService.get(dto.getRegionId());
         CategoryEntity category = categoryService.get(dto.getCategoryId());
 
         ArticleEntity entity = new ArticleEntity();

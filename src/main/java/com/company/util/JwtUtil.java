@@ -45,7 +45,26 @@ public class JwtUtil {
     }
 
 
-    public static JwtDTO getJwtUtil(String authorization, ProfileRole moderator) {
-        return null;
+    public static JwtDTO getJwtDTO(String authorization) {
+        String[] str = authorization.split(" ");
+        String jwt = str[1];
+        return JwtUtil.decode(jwt);
+    }
+
+    public static JwtDTO getJwtUtil(String authorization, ProfileRole... roleList) {
+        String[] str = authorization.split(" ");
+        String jwt = str[1];
+        JwtDTO jwtDTO = JwtUtil.decode(jwt);
+        boolean roleFound = false;
+        for (ProfileRole role : roleList) {
+            if (jwtDTO.getRole().equals(role)) {
+                roleFound = true;
+                break;
+            }
+        }
+        if (!roleFound) {
+            throw new MethodNotAllowedException("Method not allowed");
+        }
+        return jwtDTO;
     }
 }

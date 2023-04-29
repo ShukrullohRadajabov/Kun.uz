@@ -24,6 +24,4 @@ public class ArticleTypeEntity {
     private Boolean visible = Boolean.TRUE;
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
-    @Column(name = "key")
-    private String key;
 }

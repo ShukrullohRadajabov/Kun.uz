@@ -1,0 +1,38 @@
+### Create category
+POST localhost:8080/api/v1/category
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+Content-Type:  application/json
+
+{
+  "nameUZ": "Alish",
+  "nameRU": "Алишер",
+  "nameEN": "Alisher"
+}
+
+
+
+### Update cateory
+PUT localhost:8080/api/v1/category/update/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+Content-Type:  application/json
+
+{
+  "nameUZ": "Samarqand",
+  "nameRU": "Самарканд",
+  "nameEN": "Samarkand"
+}
+
+
+### Delete category byId
+DELETE localhost:8080/api/v1/category/delete/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+
+
+### Category List
+GET localhost:8080/api/v1/category/list
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+
+
+### Get cateory langName
+PUT localhost:8080/api/v1/category//getByLang/nameUZ
+

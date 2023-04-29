@@ -1,0 +1,38 @@
+### Create article_type
+POST localhost:8080/api/v1/article_type
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+Content-Type:  application/json
+
+{
+  "nameUZ": "Toshkent",
+  "nameRU": "Ташкент",
+  "nameEN": "Tashkent"
+}
+
+
+
+### Update article_type
+PUT localhost:8080/api/v1/article_type/update/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+Content-Type:  application/json
+
+{
+  "nameUZ": "Samarqand",
+  "nameRU": "Самарканд",
+  "nameEN": "Samarkand"
+}
+
+
+### Delete article_type byId
+DELETE localhost:8080/api/v1/article_type/delete/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+
+
+### Region List
+GET localhost:8080/api/v1/article_type/list
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2NzcyNjYsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI3NjM2NjYsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.n7sR72xEf4xMgvNx083Z9YPTomHkDLqF6PzP7LcIpuV776aaYR2QBJIohs7mjAUcNwTCahI_YCVnwOslbZeYyw
+
+
+### Get article_type langName
+PUT localhost:8080/api/v1/article_type//getByLang/nameUZ
+
