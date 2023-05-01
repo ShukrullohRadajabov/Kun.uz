@@ -28,7 +28,7 @@ public class ArticleEntity {
     private Integer sharedCount = 0;
 
     @Column(name = "attach_id")
-    private Integer attachId;
+    private String attachId;
     @ManyToOne
     @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     private AttachEntity attach;
@@ -57,12 +57,29 @@ public class ArticleEntity {
     @JoinColumn(name = "publisher_id", insertable = false, updatable = false)
     private ProfileEntity publisher;
 
+    @Column(name = "type_id")
+    private Integer typeId;
+    @ManyToOne
+    @JoinColumn(name = "type_id", insertable = false, updatable = false)
+    private ArticleTypeEntity type;
+
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
     @Column(name = "published_date")
-    private LocalDate publishedDate;
+    private LocalDateTime publishedDate;
     @Column(name = "visible")
     private Boolean visible = Boolean.TRUE;
     @Column(name = "view_count")
     private Integer viewCount;
+
+    public ArticleEntity() {
+    }
+
+    public ArticleEntity(String id, String title, String description, String attachId, LocalDateTime publishedDate) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.attachId = attachId;
+        this.publishedDate = publishedDate;
+    }
 }

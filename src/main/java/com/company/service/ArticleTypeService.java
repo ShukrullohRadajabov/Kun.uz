@@ -1,11 +1,10 @@
 package com.company.service;
 
-import com.company.dto.ArticleTypeDTO;
+import com.company.dto.profile_type.ArticleTypeDTO;
 import com.company.entity.ArticleTypeEntity;
 import com.company.exceptions.AppBadRequestException;
 import com.company.exceptions.ItemNotFoundException;
 import com.company.repository.ArticleTypeRepository;
-import com.company.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

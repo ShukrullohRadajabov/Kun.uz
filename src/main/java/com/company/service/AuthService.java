@@ -1,17 +1,19 @@
 package com.company.service;
 
-import com.company.dto.AuthDTO;
-import com.company.dto.AuthResponseDTO;
-import com.company.dto.ProfileDTO;
+import com.company.dto.auth.AuthDTO;
+import com.company.dto.auth.AuthResponseDTO;
+import com.company.dto.auth.RegistrationDTO;
+import com.company.dto.auth.RegistrationResponseDTO;
+import com.company.dto.profile.ProfileDTO;
 import com.company.entity.ProfileEntity;
 import com.company.enums.GeneralStatus;
 import com.company.enums.ProfileRole;
+import com.company.exceptions.AlreadyExistException;
 import com.company.exceptions.AppBadRequestException;
 import com.company.exceptions.ItemNotFoundException;
 import com.company.repository.ProfileRepository;
 import com.company.util.JwtUtil;
 import com.company.util.MD5Util;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,7 @@ public class AuthService {
 
     public ProfileDTO registration(ProfileDTO dto) {
         ProfileEntity entity = new ProfileEntity();
-        isValidProfile(dto);
+//        isValidProfile(dto);
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
         entity.setEmail(dto.getEmail());
@@ -53,10 +55,30 @@ public class AuthService {
         return dto;
     }
 
+    public RegistrationResponseDTO registration(RegistrationDTO dto){
+        isValidProfile(dto);
+        Optional<ProfileEntity> optional = profileRepository.findByEmail(dto.getEmail());
+        if(optional.isPresent()){
+            throw new AlreadyExistException("Email already exist");
+        }
+        ProfileEntity entity = new ProfileEntity();
+        entity.setName(dto.getName());
+        entity.setSurname(dto.getSurname());
+        entity.setRole(ProfileRole.USER);
+        entity.setPhone(dto.getPhone());
+        entity.setEmail(dto.getEmail());
+        entity.setPassword(MD5Util.getMd5Hash(dto.getPassword()));
+        entity.setStatus(GeneralStatus.REGISTER);
+        profileRepository.save(entity);
+        String s = "Verification link was sent to email: "+dto.getEmail();
+        return new RegistrationResponseDTO(s);
+    }
 
 
 
-    public void isValidProfile(ProfileDTO dto){
+
+
+    public void isValidProfile(RegistrationDTO dto){
         if (dto.getName() == null || dto.getName().isBlank()) {
             throw new AppBadRequestException("Name qani?");
         }

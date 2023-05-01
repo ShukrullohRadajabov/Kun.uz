@@ -12,4 +12,6 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity, Integer
     Optional<ProfileEntity> findByEmailAndPasswordAndVisible(String email, String password, boolean visible);
 
     Page<ProfileEntity> findAll(Pageable paging);
+
+    Optional<ProfileEntity> findByEmail(String email);
 }

@@ -1,6 +1,6 @@
 package com.company.util;
 
-import com.company.dto.JwtDTO;
+import com.company.dto.jwt.JwtDTO;
 import com.company.enums.ProfileRole;
 import com.company.exceptions.MethodNotAllowedException;
 import io.jsonwebtoken.*;

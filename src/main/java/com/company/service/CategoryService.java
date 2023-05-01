@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.dto.CategoryDTO;
+import com.company.dto.category.CategoryDTO;
 import com.company.entity.CategoryEntity;
 import com.company.exceptions.AppBadRequestException;
 import com.company.exceptions.ItemNotFoundException;

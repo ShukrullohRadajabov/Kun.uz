@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.dto.ProfileDTO;
+import com.company.dto.profile.ProfileDTO;
 import com.company.entity.ProfileEntity;
 import com.company.enums.GeneralStatus;
 import com.company.exceptions.AppBadRequestException;

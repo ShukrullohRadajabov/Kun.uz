@@ -1,4 +1,4 @@
-package com.company.dto;
+package com.company.dto.article;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -16,9 +16,12 @@ public class ArticleRequestDTO {
     private String description;
     @NotEmpty(message = "Content qani")
     private String content;
-    private Integer attachId;
+    @NotNull(message = " Attach required")
+    private String attachId;
+    @NotNull(message = " Region required")
     private Integer regionId;
+    @NotNull(message = " Category required")
     private Integer categoryId;
-    @NotEmpty(message = "Should provide value")
-    private List<Integer> typeList;
+    @NotNull(message = " articleType required")
+    private Integer typeId;
 }

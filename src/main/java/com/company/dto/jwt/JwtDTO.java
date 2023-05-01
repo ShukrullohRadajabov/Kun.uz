@@ -1,4 +1,4 @@
-package com.company.dto;
+package com.company.dto.jwt;
 
 import com.company.enums.ProfileRole;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,11 @@
 package com.company.controller;
 
+import com.company.dto.attach.AttachDTO;
 import com.company.service.AttachService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +18,17 @@ public class AttachController {
     private AttachService attachService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
-        String fileName = attachService.saveToSystem(file);
-        return ResponseEntity.ok().body(fileName);
+    public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file) {
+        AttachDTO res = attachService.saveToSystem3(file);
+        return ResponseEntity.ok().body(res);
     }
 
-    @GetMapping(value = "/open/{fileName}" , produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] open(@PathVariable("fileName") String fileName){
-        if(fileName != null && fileName.length()>0){
+    @GetMapping(value = "/open/{fileName}", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] open(@PathVariable("fileName") String fileName) {
+        if (fileName != null && fileName.length() > 0) {
             try {
-                return this.attachService.loadImage(fileName);
-            }catch (Exception e){
+                return this.attachService.loadImage2(fileName);
+            } catch (Exception e) {
                 e.printStackTrace();
                 return new byte[0];
             }
@@ -33,16 +36,19 @@ public class AttachController {
         return null;
     }
 
+
     @GetMapping(value = "/open_general/{fileName}", produces = MediaType.ALL_VALUE)
     public byte[] open_general(@PathVariable("fileName") String fileName) {
-        return attachService.open_general(fileName);
+        return attachService.open_general2(fileName);
+    }
+
+    @GetMapping("/download/{fineName}")
+    public ResponseEntity<Resource> download(@PathVariable("fineName") String fileName) {
+        Resource file = attachService.download(fileName);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
 
-    @DeleteMapping("/delete/{fineName}")
-    public ResponseEntity<Boolean> delete(@PathVariable("fineName") String fileName) {
-        boolean delete = attachService.delete(fileName);
-        return ResponseEntity.ok(delete);
-    }
 
 }

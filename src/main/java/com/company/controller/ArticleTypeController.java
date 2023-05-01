@@ -1,7 +1,7 @@
 package com.company.controller;
 
-import com.company.dto.JwtDTO;
-import com.company.dto.ArticleTypeDTO;
+import com.company.dto.jwt.JwtDTO;
+import com.company.dto.profile_type.ArticleTypeDTO;
 import com.company.enums.ProfileRole;
 import com.company.exceptions.MethodNotAllowedException;
 import com.company.service.ArticleTypeService;

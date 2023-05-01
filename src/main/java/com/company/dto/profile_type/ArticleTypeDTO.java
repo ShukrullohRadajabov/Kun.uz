@@ -1,4 +1,4 @@
-package com.company.dto;
+package com.company.dto.profile_type;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CategoryDTO {
+public class ArticleTypeDTO {
     private Integer id;
     private String name;
     private String nameUZ;

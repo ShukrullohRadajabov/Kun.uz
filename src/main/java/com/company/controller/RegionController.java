@@ -1,15 +1,13 @@
 package com.company.controller;
 
-import com.company.dto.JwtDTO;
-import com.company.dto.ProfileDTO;
-import com.company.dto.RegionDTO;
+import com.company.dto.jwt.JwtDTO;
+import com.company.dto.region.RegionDTO;
 import com.company.enums.ProfileRole;
 import com.company.exceptions.MethodNotAllowedException;
 import com.company.service.RegionService;
 import com.company.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

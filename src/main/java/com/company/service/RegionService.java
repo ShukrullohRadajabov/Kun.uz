@@ -1,24 +1,13 @@
 package com.company.service;
 
-import com.company.dto.ProfileDTO;
-import com.company.dto.RegionDTO;
-import com.company.entity.ProfileEntity;
+import com.company.dto.region.RegionDTO;
 import com.company.entity.RegionEntity;
-import com.company.enums.GeneralStatus;
 import com.company.exceptions.AppBadRequestException;
 import com.company.exceptions.ItemNotFoundException;
-import com.company.exceptions.MethodNotAllowedException;
-import com.company.repository.ProfileRepository;
 import com.company.repository.RegionRepository;
-import com.company.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.xml.stream.events.DTD;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;

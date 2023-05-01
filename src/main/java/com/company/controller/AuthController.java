@@ -1,8 +1,10 @@
 package com.company.controller;
 
-import com.company.dto.AuthDTO;
-import com.company.dto.AuthResponseDTO;
-import com.company.dto.ProfileDTO;
+import com.company.dto.auth.AuthDTO;
+import com.company.dto.auth.AuthResponseDTO;
+import com.company.dto.auth.RegistrationDTO;
+import com.company.dto.auth.RegistrationResponseDTO;
+import com.company.dto.profile.ProfileDTO;
 import com.company.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,13 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(dto));
     }
 
-    @PostMapping("/registration")
+   /* @PostMapping("/registration")
     public ResponseEntity<?> registration(@RequestBody ProfileDTO dto) {
+        return ResponseEntity.ok(authService.registration(dto));
+    }*/
+
+    @PostMapping("/registration")
+    public ResponseEntity<RegistrationResponseDTO> registration(@RequestBody RegistrationDTO dto) {
         return ResponseEntity.ok(authService.registration(dto));
     }
 }
