@@ -23,4 +23,5 @@ public class RegionEntity {
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
 
+
 }

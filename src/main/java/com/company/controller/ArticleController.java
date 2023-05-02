@@ -5,12 +5,15 @@ import com.company.dto.article.ArticleRequestDTO;
 import com.company.dto.article.ArticleShortInfoDTO;
 import com.company.dto.jwt.JwtDTO;
 
+import com.company.dto.profile.ProfileDTO;
 import com.company.enums.ArticleStatus;
 import com.company.enums.ProfileRole;
+import com.company.exceptions.MethodNotAllowedException;
 import com.company.service.ArticleService;
 import com.company.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,7 +74,54 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.getLast8WithoutList(listDTO.getList()));
     }
 
+    @GetMapping("/get-id-lang")
+    public ResponseEntity<?> getByIdAndLang(@RequestParam("id") String id, @RequestParam("language") String language) {
+        return ResponseEntity.ok(articleService.getByIdAndLanguage(id, language));
+    }
 
+    @GetMapping("/get-last4")
+    public ResponseEntity<List<ArticleShortInfoDTO>> getLast4Except(@RequestParam("id") String id){
+        return ResponseEntity.ok((articleService.getLast4ExceptGivenId(id)));
+    }
+
+    @GetMapping("/get-last4view")
+    public ResponseEntity<List<ArticleShortInfoDTO>> getLast4MostView(){
+        return ResponseEntity.ok((articleService.getLast4MostView()));
+    }
+
+    @GetMapping("/get5by-type-region")
+    public ResponseEntity<List<ArticleShortInfoDTO>> get5ByTypeAndRegion(@RequestParam("type") Integer typeId, @RequestParam("region") Integer regionId){
+        return ResponseEntity.ok((articleService.get5ByTypeAndRegion(typeId, regionId)));
+    }
+
+    @GetMapping("/get5by-category")
+    public ResponseEntity<List<ArticleShortInfoDTO>> get5ByCategory(@RequestParam("category") Integer categoryId){
+        return ResponseEntity.ok(articleService.get5ByCategory(categoryId));
+    }
+
+    @GetMapping(value = "/paging")
+    public ResponseEntity<Page<ArticleShortInfoDTO>> paging(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                   @RequestParam(value = "size", defaultValue = "30") int size,
+                                                   @RequestParam(value = "id") Integer id) {
+        return ResponseEntity.ok(articleService.getArticleByRegionIdPaging(page, size, id));
+    }
+
+    @GetMapping(value = "/paging-category")
+    public ResponseEntity<Page<ArticleShortInfoDTO>> pagingWithCategory(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                            @RequestParam(value = "size", defaultValue = "30") int size,
+                                                            @RequestParam(value = "id") Integer id) {
+        return ResponseEntity.ok(articleService.getArticleByCategoryIdPaging(page, size, id));
+    }
+
+    @GetMapping("/view-count")
+    public ResponseEntity<Integer> increaseViewCount(@RequestParam("id") String articleId){
+        return ResponseEntity.ok(articleService.increaseViewCount(articleId));
+    }
+
+    @GetMapping("/share-count")
+    public ResponseEntity<Integer> increaseShareCount(@RequestParam("id") String articleId){
+        return ResponseEntity.ok(articleService.increaseShareCount(articleId));
+    }
 
 
 }

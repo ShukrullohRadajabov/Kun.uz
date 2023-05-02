@@ -70,7 +70,8 @@ public class CategoryService {
 
     public CategoryEntity get(Integer moderId) {
         Optional<CategoryEntity> byId = categoryRepository.findById(moderId);
-        return null;
+        CategoryEntity entity = byId.get();
+        return entity;
     }
 
     public List<CategoryDTO> getList() {

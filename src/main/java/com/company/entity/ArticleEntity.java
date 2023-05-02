@@ -70,7 +70,7 @@ public class ArticleEntity {
     @Column(name = "visible")
     private Boolean visible = Boolean.TRUE;
     @Column(name = "view_count")
-    private Integer viewCount;
+    private Integer viewCount = 0;
 
     public ArticleEntity() {
     }

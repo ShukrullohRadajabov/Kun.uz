@@ -70,7 +70,8 @@ public class RegionService {
 
     public RegionEntity get(Integer moderId) {
         Optional<RegionEntity> byId = regionRepository.findById(moderId);
-        return null;
+        RegionEntity region = byId.get();
+        return region;
     }
 
     public List<RegionDTO> getList() {

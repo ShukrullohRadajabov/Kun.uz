@@ -3,14 +3,24 @@ package com.company.service;
 import com.company.dto.article.ArticleListDTO;
 import com.company.dto.article.ArticleRequestDTO;
 import com.company.dto.article.ArticleShortInfoDTO;
+import com.company.dto.article.FullArticleDTO;
+import com.company.dto.category.CategoryResponseDTO;
+import com.company.dto.profile.ProfileDTO;
+import com.company.dto.region.RegionResponseDTO;
 import com.company.entity.*;
 import com.company.enums.ArticleStatus;
 import com.company.enums.GeneralStatus;
 import com.company.exceptions.ItemNotFoundException;
+import com.company.exceptions.MethodNotAllowedException;
 import com.company.mapper.ArticleShortInfoMapper;
 import com.company.repository.ArticleRepository;
 import com.company.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.expression.spel.ast.StringLiteral;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -164,11 +174,175 @@ public class ArticleService {
                 }
                 if (list.size() == 8) break;
             }
-            if(list.size()==8)break;
+            if (list.size() == 8) break;
         }
         list.forEach(entity -> {
             infoDTOS.add(toArticleShortInfo(entity));
         });
         return infoDTOS;
     }
+
+
+    public FullArticleDTO getByIdAndLanguage(String id, String language) {
+        Optional<ArticleEntity> optional = articleRepository.getById(id, ArticleStatus.NOT_PUBLISHED);
+        if (optional.isEmpty()) {
+            throw new ItemNotFoundException("Article not found");
+        }
+        ArticleEntity entity = optional.get();
+        switch (language) {
+            case "uz" -> {
+                RegionEntity region = regionService.get(entity.getRegionId());
+                RegionResponseDTO regionResponseDTO = new RegionResponseDTO();
+                regionResponseDTO.setId(region.getId());
+                regionResponseDTO.setName(region.getNameUZ());
+
+                CategoryEntity category = categoryService.get(entity.getCategoryId());
+                CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
+                categoryResponseDTO.setId(category.getId());
+                categoryResponseDTO.setName(category.getNameUZ());
+                return toFullInfoDTO(entity, regionResponseDTO, categoryResponseDTO);
+            }
+            case "ru" -> {
+                RegionEntity region = regionService.get(entity.getRegionId());
+                RegionResponseDTO regionResponseDTO = new RegionResponseDTO();
+                regionResponseDTO.setId(region.getId());
+                regionResponseDTO.setName(region.getNameRU());
+
+                CategoryEntity category = categoryService.get(entity.getCategoryId());
+                CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
+                categoryResponseDTO.setId(category.getId());
+                categoryResponseDTO.setName(category.getNameRU());
+                return toFullInfoDTO(entity, regionResponseDTO, categoryResponseDTO);
+            }
+            case "eng" -> {
+                RegionEntity region = regionService.get(entity.getRegionId());
+                RegionResponseDTO regionResponseDTO = new RegionResponseDTO();
+                regionResponseDTO.setId(region.getId());
+                regionResponseDTO.setName(region.getNameEN());
+
+                CategoryEntity category = categoryService.get(entity.getCategoryId());
+                CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
+                categoryResponseDTO.setId(category.getId());
+                categoryResponseDTO.setName(category.getNameEN());
+                return toFullInfoDTO(entity, regionResponseDTO, categoryResponseDTO);
+            }
+            default -> {
+                throw new MethodNotAllowedException("Lang not found");
+            }
+        }
+    }
+
+    public FullArticleDTO toFullInfoDTO(ArticleEntity entity,
+                                        RegionResponseDTO regionResponseDTO,
+                                        CategoryResponseDTO categoryResponseDTO) {
+
+        FullArticleDTO dto = new FullArticleDTO();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setDescription(entity.getDescription());
+        dto.setContent(entity.getContent());
+        dto.setRegion(regionResponseDTO);
+        dto.setCategory(categoryResponseDTO);
+        dto.setPublishedDate(entity.getPublishedDate());
+        dto.setSharedCount(entity.getSharedCount());
+        dto.setViewCount(entity.getViewCount());
+//         dto.setLikeCount(entity.getLikeCount());
+        return dto;
+    }
+
+    public List<ArticleShortInfoDTO> getLast4ExceptGivenId(String id) {
+        List<ArticleShortInfoMapper> listOfArticle = articleRepository.findAll4(id, 4);
+        List<ArticleShortInfoDTO> dtoList = new LinkedList<>();
+        listOfArticle.forEach(entity -> {
+            dtoList.add(toArticleShortInfo(entity));
+        });
+        return dtoList;
+    }
+
+    public List<ArticleShortInfoDTO> getLast4MostView() {
+        List<ArticleShortInfoMapper> listOfArticle = articleRepository.find4(4);
+        List<ArticleShortInfoDTO> dtoList = new LinkedList<>();
+        listOfArticle.forEach(entity -> {
+            dtoList.add(toArticleShortInfo(entity));
+        });
+        return dtoList;
+    }
+
+    public List<ArticleShortInfoDTO> get5ByTypeAndRegion(Integer typeId, Integer regionId) {
+        List<ArticleEntity> listOfArticle = articleRepository.find5ByTypeAndRegion(typeId, regionId);
+        List<ArticleShortInfoDTO> dtoList = new LinkedList<>();
+        listOfArticle.forEach(entity -> {
+            dtoList.add(toArticleShortInfo(entity));
+        });
+        return dtoList;
+    }
+
+    public List<ArticleShortInfoDTO> get5ByCategory(Integer categoryId) {
+        List<ArticleEntity> listOfArticle = articleRepository.get5ByCategoryId(categoryId);
+        List<ArticleShortInfoDTO> dtoList = new LinkedList<>();
+        listOfArticle.forEach(entity -> {
+            dtoList.add(toArticleShortInfo(entity));
+        });
+        return dtoList;
+    }
+
+    public Page<ArticleShortInfoDTO> getArticleByRegionIdPaging(int page, int size, Integer id) {
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<ArticleEntity> pageObj = articleRepository.findAllByRegionId(paging, id);
+
+        Long totalCount = pageObj.getTotalElements();
+
+        List<ArticleEntity> entityList = pageObj.getContent();
+        List<ArticleShortInfoDTO> list = new LinkedList<>();
+        entityList.forEach(entity -> {
+            list.add(toArticleShortInfo(entity));
+        });
+        Page<ArticleShortInfoDTO> response = new PageImpl<ArticleShortInfoDTO>(list, paging, totalCount);
+        return response;
+    }
+
+
+    public Page<ArticleShortInfoDTO> getArticleByCategoryIdPaging(int page, int size, Integer id) {
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<ArticleEntity> pageObj = articleRepository.findAllByCategoryId(paging, id);
+
+        Long totalCount = pageObj.getTotalElements();
+
+        List<ArticleEntity> entityList = pageObj.getContent();
+        List<ArticleShortInfoDTO> list = new LinkedList<>();
+        entityList.forEach(entity -> {
+            list.add(toArticleShortInfo(entity));
+        });
+        Page<ArticleShortInfoDTO> response = new PageImpl<ArticleShortInfoDTO>(list, paging, totalCount);
+        return response;
+    }
+
+    public int increaseViewCount(String articleId) {
+        Optional<ArticleEntity> articleEntity = articleRepository.findById(articleId);
+        if (articleEntity.isEmpty()) {
+            throw new ItemNotFoundException("Item not found");
+        }
+        ArticleEntity articleEntity1 = new ArticleEntity();
+        Integer a = articleEntity1.getViewCount();
+        if(a==null){
+            a=1;
+        }
+        else {
+            a++;
+        }
+        Integer result = articleRepository.updateViewCount(a, articleId);
+       return result;
+    }
+
+
+    public int increaseShareCount(String articleId) {
+        Optional<ArticleEntity> articleEntity = articleRepository.findById(articleId);
+        if (articleEntity.isEmpty()) {
+            throw new ItemNotFoundException("Item not found");
+        }
+        ArticleEntity articleEntity1 = new ArticleEntity();
+        Integer result = articleRepository.updateShareCount(articleEntity1.getViewCount()+1, articleId);
+        return result;
+    }
+
 }

@@ -54,7 +54,37 @@ Content-Type: application/json
 }
 
 ### Get article by id and lang
-GET localhost:8080/api/v1/article/get-id-lang/1/UZ
+GET localhost:8080/api/v1/article/get-id-lang?id=f0e35734-7509-49a5-9026-92a8c75d436b&language=uz
+
+### Article last 4 without given id
+GET localhost:8080/api/v1/article/get-last4?id=f0e35734-7509-49a5-9026-92a8c75d436b
+
+### Article last 4 most view
+GET localhost:8080/api/v1/article/get-last4view
+
+
+### Get last 5 article by type id and region id
+GET localhost:8080/api/v1/article/get5by-type-region?type=3&region=1
+
+
+### Get last 5 article by category id
+GET localhost:8080/api/v1/article/get5by-category?category=3
+
+
+### Get Article By RegionId Pagination
+GET localhost:8080/api/v1/article/paging?page=1&size=6&id=1
+
+
+### Get Article By CategoryId Pagination
+GET localhost:8080/api/v1/article/paging-category?page=1&size=6&id=1
+
+### Increase article view count
+GET localhost:8080/api/v1/article/view-count?id=d8be8200-7449-4bb7-84f9-d4a9657f3da8
+
+### Increase article share count
+GET localhost:8080/api/v1/article/share-count?id=d8be8200-7449-4bb7-84f9-d4a9657f3da8
+
+
 
 
 

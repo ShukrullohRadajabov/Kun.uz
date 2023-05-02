@@ -1,16 +1,23 @@
 package com.company.repository;
 
 import com.company.entity.ArticleEntity;
+import com.company.entity.ProfileEntity;
 import com.company.enums.ArticleStatus;
+import com.company.enums.GeneralStatus;
 import com.company.mapper.ArticleShortInfoMapper;
 import jakarta.transaction.Transactional;
+import org.hibernate.annotations.Where;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+import java.util.Optional;
+@Repository
 public interface ArticleRepository extends CrudRepository<ArticleEntity, String> {
     @Transactional
     @Modifying
@@ -39,4 +46,45 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
 
     @Query("from ArticleEntity where status = :status and visible = true")
     List<ArticleEntity> getAllArticle(@Param("status") ArticleStatus published);
+
+    @Query("from ArticleEntity where id =:id and status =:status ")
+    Optional<ArticleEntity> getById(@Param("id") String id, @Param("status") ArticleStatus status);
+
+
+    @Query(value = "SELECT a.id , a.title,a.description,a.attach_id,a.published_date" +
+            " FROM article AS a  inner join article_type as t on t.id = a.type_id where  a.id != :id order by a.created_date desc Limit :limit", nativeQuery = true)
+    List<ArticleShortInfoMapper> findAll4(@Param("id") String id, @Param("limit") Integer limit);
+
+    @Query(value = "SELECT a.id , a.title,a.description,a.attach_id,a.published_date" +
+            " FROM article AS a inner join article_type as t on t.id = a.type_id order by a.view_count desc Limit :limit", nativeQuery = true)
+    List<ArticleShortInfoMapper> find4(@Param("limit") Integer limit);
+
+
+
+//    @Query(value = "SELECT a.id , a.title,a.description,a.attach_id,a.published_date" +
+//            " FROM article AS a inner join article_type as t on t.id = a.type_id where a.region_id :region_id and a.type_id :type_id order by a.created_date desc Limit :limit", nativeQuery = true)
+//    List<ArticleShortInfoMapper> find5ByTypeAndRegion(@Param("limit") Integer limit, @Param("region_id") Integer regionId, @Param("type_id") Integer typeId);
+
+    @Query("from ArticleEntity where typeId =:typeId and regionId =:regionId order by createdDate limit 5")
+    List<ArticleEntity> find5ByTypeAndRegion(@Param("typeId") Integer typeId, @Param("regionId") Integer regionId);
+
+
+    @Query("from ArticleEntity where categoryId =:categoryId order by createdDate limit 5")
+    List<ArticleEntity> get5ByCategoryId(@Param("categoryId") Integer categoryId);
+
+    Page<ArticleEntity> findAllByRegionId(Pageable paging, Integer id);
+
+    Page<ArticleEntity> findAllByCategoryId(Pageable paging, Integer id);
+
+
+    @Transactional
+    @Modifying
+    @Query("update  ArticleEntity  set viewCount = :viewCount where id =:id")
+    Integer updateViewCount(@Param("viewCount") Integer viewCount, @Param("id") String id);
+
+
+    @Transactional
+    @Modifying
+    @Query("update  ArticleEntity  set sharedCount = :sharedCount where id =:id")
+    Integer updateShareCount(@Param("sharedCount") Integer sharedCount, @Param("id") String id);
 }
