@@ -89,6 +89,12 @@ public class ArticleController {
         return ResponseEntity.ok((articleService.getLast4MostView()));
     }
 
+
+    @GetMapping("/get-last4tag")
+    public ResponseEntity<List<ArticleShortInfoDTO>> getLast4ByTag(@RequestParam("tag") Integer tag){
+        return ResponseEntity.ok((articleService.getLast4ByTag(tag)));
+    }
+
     @GetMapping("/get5by-type-region")
     public ResponseEntity<List<ArticleShortInfoDTO>> get5ByTypeAndRegion(@RequestParam("type") Integer typeId, @RequestParam("region") Integer regionId){
         return ResponseEntity.ok((articleService.get5ByTypeAndRegion(typeId, regionId)));

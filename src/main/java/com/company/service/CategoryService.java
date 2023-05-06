@@ -68,8 +68,8 @@ public class CategoryService {
         return true;
     }
 
-    public CategoryEntity get(Integer moderId) {
-        Optional<CategoryEntity> byId = categoryRepository.findById(moderId);
+    public CategoryEntity get(Integer getById) {
+        Optional<CategoryEntity> byId = categoryRepository.findById(getById);
         CategoryEntity entity = byId.get();
         return entity;
     }

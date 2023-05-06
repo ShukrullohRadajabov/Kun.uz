@@ -3,6 +3,7 @@ import com.company.enums.ArticleStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.engine.profile.Fetch;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -71,6 +72,11 @@ public class ArticleEntity {
     private Boolean visible = Boolean.TRUE;
     @Column(name = "view_count")
     private Integer viewCount = 0;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id", insertable = false, updatable = false)
+    private TagEntity tag;
+    @Column(name = "tag_id")
+    private Integer tagId;
 
     public ArticleEntity() {
     }

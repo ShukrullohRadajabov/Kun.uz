@@ -85,6 +85,13 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
 
     @Transactional
     @Modifying
-    @Query("update  ArticleEntity  set sharedCount = :sharedCount where id =:id")
+    @Query("update ArticleEntity  set sharedCount = :sharedCount where id =:id")
     Integer updateShareCount(@Param("sharedCount") Integer sharedCount, @Param("id") String id);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "SELECT a.id, a.title, a.description, a.attach_id, a.published_date" +
+            " FROM article AS a inner join tag as t on t.id = a.tag_id where t.id =:tag order by a.view_count desc Limit :limit", nativeQuery = true)
+    List<ArticleShortInfoMapper> get4ByTag(@Param("tag") Integer tag, @Param("limit")Integer limit);
 }

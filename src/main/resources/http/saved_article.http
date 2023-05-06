@@ -1,0 +1,8 @@
+
+### Create Saved Article
+POST localhost:8080/api/v1/saved-article/create?articleId=dcc2fcfc-286c-4752-a04d-c6f84597a657
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMyNjczMzEsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMzNTM3MzEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.fz4rXsrrflTdsMrYB_TF_HSYfb22z995ZxNw51QjtOAdRR_3-joTDn0ZetHolLAX9RyNj83g4sXrRhQu4R_Ljw
+
+### Delete Saved article
+DELETE localhost:8080/api/v1/saved-article/delete?articleId=f0e35734-7509-49a5-9026-92a8c75d436b
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMyNjczMzEsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMzNTM3MzEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.fz4rXsrrflTdsMrYB_TF_HSYfb22z995ZxNw51QjtOAdRR_3-joTDn0ZetHolLAX9RyNj83g4sXrRhQu4R_Ljw

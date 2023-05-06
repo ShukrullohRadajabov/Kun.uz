@@ -1,0 +1,30 @@
+### Create tag
+POST localhost:8080/api/v1/tag
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMxODk0OTQsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMyNzU4OTQsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.lFmT5mMe8FiVJ4DZncN_VzBnCE5kGTgYSM2rJZshVVCkafw0ap0Iz06snMZz-lz9ftNOqt-fEs5Lh_ybi_JMwQ
+Content-Type:  application/json
+
+{
+  "id": 1,
+  "name": "#sport"
+}
+
+
+### Update tag
+PUT localhost:8080/api/v1/tag/update/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMxODk0OTQsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMyNzU4OTQsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.lFmT5mMe8FiVJ4DZncN_VzBnCE5kGTgYSM2rJZshVVCkafw0ap0Iz06snMZz-lz9ftNOqt-fEs5Lh_ybi_JMwQ
+Content-Type:  application/json
+
+{
+  "name": "#sport2"
+}
+
+
+
+### Delete tag byId
+DELETE localhost:8080/api/v1/tag/delete/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMxODk0OTQsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMyNzU4OTQsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.lFmT5mMe8FiVJ4DZncN_VzBnCE5kGTgYSM2rJZshVVCkafw0ap0Iz06snMZz-lz9ftNOqt-fEs5Lh_ybi_JMwQ
+
+
+### Region List
+GET localhost:8080/api/v1/tag/list
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMxODk0OTQsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMyNzU4OTQsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.lFmT5mMe8FiVJ4DZncN_VzBnCE5kGTgYSM2rJZshVVCkafw0ap0Iz06snMZz-lz9ftNOqt-fEs5Lh_ybi_JMwQ

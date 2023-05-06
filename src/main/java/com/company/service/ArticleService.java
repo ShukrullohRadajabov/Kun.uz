@@ -1,15 +1,12 @@
 package com.company.service;
 
-import com.company.dto.article.ArticleListDTO;
 import com.company.dto.article.ArticleRequestDTO;
 import com.company.dto.article.ArticleShortInfoDTO;
 import com.company.dto.article.FullArticleDTO;
 import com.company.dto.category.CategoryResponseDTO;
-import com.company.dto.profile.ProfileDTO;
 import com.company.dto.region.RegionResponseDTO;
 import com.company.entity.*;
 import com.company.enums.ArticleStatus;
-import com.company.enums.GeneralStatus;
 import com.company.exceptions.ItemNotFoundException;
 import com.company.exceptions.MethodNotAllowedException;
 import com.company.mapper.ArticleShortInfoMapper;
@@ -20,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.expression.spel.ast.StringLiteral;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -261,6 +257,15 @@ public class ArticleService {
 
     public List<ArticleShortInfoDTO> getLast4MostView() {
         List<ArticleShortInfoMapper> listOfArticle = articleRepository.find4(4);
+        List<ArticleShortInfoDTO> dtoList = new LinkedList<>();
+        listOfArticle.forEach(entity -> {
+            dtoList.add(toArticleShortInfo(entity));
+        });
+        return dtoList;
+    }
+
+    public List<ArticleShortInfoDTO> getLast4ByTag(Integer tag) {
+        List<ArticleShortInfoMapper> listOfArticle = articleRepository.get4ByTag(tag, 4);
         List<ArticleShortInfoDTO> dtoList = new LinkedList<>();
         listOfArticle.forEach(entity -> {
             dtoList.add(toArticleShortInfo(entity));
