@@ -1,33 +1,34 @@
 package com.company.entity;
 
+import com.company.enums.EmotionStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+
 @Getter
 @Setter
-@Table(name = "comment")
+@Table(name = "article_like")
 @Entity
-public class CommentEntity {
+public class ArticleLikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
-    @Column(name = "update_date")
-    private LocalDateTime updateDate;
     @Column(name = "profile_id")
     private Integer profileId;
-    @Column(name = "content", columnDefinition = "text")
-    private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id", insertable = false, updatable = false)
+    private ProfileEntity profile;
     @Column(name = "article_id")
     private String articleId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", insertable = false, updatable = false)
     private ArticleEntity article;
-    @Column(name = "replay_id")
-    private Integer replayId;
-    @Column(name = "visible")
-    private Boolean visible = true;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate = LocalDateTime.now();
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private EmotionStatus status;
+
 }

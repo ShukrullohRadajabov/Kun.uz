@@ -1,12 +1,12 @@
 ### Create article_type
 POST localhost:8080/api/v1/article_type
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI5MjAxNTIsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMwMDY1NTIsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.CF8knCdnvSd3ab8LN46_R-6MQq0tad0WwHkqClW4UIfXR_QrTbFs3Jnl6xUblMOKSRXZ52DuMKWPpQLqWuCqcA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMzNjcwMDIsImlkIjoxLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODM0NTM0MDIsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9._sWh6QVN8ERHPgWnyMFDg6k-t6gtLI4y4GVRJiDUN2NYdrSWQqZAdyWsW09H3Ji3ks0G1AWsFrMSgQoShwV0Mw
 Content-Type:  application/json
 
 {
-  "nameUZ": "Dolzarb1",
-  "nameRU": "Dolzarb2",
-  "nameEN": "Dolzarb3"
+  "nameUZ": "Olam1",
+  "nameRU": "Olam2",
+  "nameEN": "Olam3"
 }
 
 

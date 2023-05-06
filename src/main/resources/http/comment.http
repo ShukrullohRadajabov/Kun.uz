@@ -1,33 +1,37 @@
 
 ### Create comment
 POST localhost:8080/api/v1/comment/
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMyMDA0NDQsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMyODY4NDQsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.vETe_l5ViMyKbHghl04VFkvHy4ZmtIXeSbPkTqtFqGjwU69KE9namzT1xemGygOQ4SEfEhGXyuF5HcGx_nMeog
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMzNzQ5OTMsImlkIjo4LCJyb2xlIjoiVVNFUiIsImV4cCI6MTY4MzQ2MTM5MywiaXNzIjoiS3VudXogdGVzdCBwb3J0YWxpIn0.qUQVWK158KWZwhklETGbb9Fnsac-Jm97xEssNYFcj--RD-ZC52KjVVprzGlQYLWsJSXqF2fUQ4dn_so1WIX6DA
 Content-Type:  application/json
 
 {
   "content": "Salom4",
-  "articleId": "bb596bab-8788-45b5-85d4-90c2d3b9c08e",
+  "articleId": "2db26b85-74fd-436d-a83c-8cbba6aca005",
   "replayId": null
 }
 
 ### Update comment
-PUT localhost:8080/api/v1/comment/update/1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMyMDA0NDQsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMyODY4NDQsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.vETe_l5ViMyKbHghl04VFkvHy4ZmtIXeSbPkTqtFqGjwU69KE9namzT1xemGygOQ4SEfEhGXyuF5HcGx_nMeog
+PUT localhost:8080/api/v1/comment/update/5
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMzNTEwNTEsImlkIjoxOCwicm9sZSI6IlVTRVIiLCJleHAiOjE2ODM0Mzc0NTEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.DbWYWx0X8g7TzfpRJFCJv78HRzCnPcKNowQnwwm9MXLbatJuPKbUUpppW-6ZUcncfH8h2i5oCPDMr3oB7ndpww
 Content-Type:  application/json
 
 {
   "content": "Alisher Usmonovning o'g'li bor ekan2",
-  "articleId": "dcc2fcfc-286c-4752-a04d-c6f84597a657"
+  "articleId": "bb596bab-8788-45b5-85d4-90c2d3b9c08e"
 }
 
 
 ### Delete comment byId
-DELETE localhost:8080/api/v1/comment/delete/4
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI5MjAxNTIsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMwMDY1NTIsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.CF8knCdnvSd3ab8LN46_R-6MQq0tad0WwHkqClW4UIfXR_QrTbFs3Jnl6xUblMOKSRXZ52DuMKWPpQLqWuCqcA
+DELETE localhost:8080/api/v1/comment/delete/5
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMzNTEwNTEsImlkIjoxOCwicm9sZSI6IlVTRVIiLCJleHAiOjE2ODM0Mzc0NTEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.DbWYWx0X8g7TzfpRJFCJv78HRzCnPcKNowQnwwm9MXLbatJuPKbUUpppW-6ZUcncfH8h2i5oCPDMr3oB7ndpww
 
 
-### Region List
-GET localhost:8080/api/v1/comment/list
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI5MjAxNTIsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMwMDY1NTIsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.CF8knCdnvSd3ab8LN46_R-6MQq0tad0WwHkqClW4UIfXR_QrTbFs3Jnl6xUblMOKSRXZ52DuMKWPpQLqWuCqcA
+### Comment List By article
+GET localhost:8080/api/v1/comment/list/2db26b85-74fd-436d-a83c-8cbba6aca005
+
+
+### Comment List Pagination
+GET localhost:8080/api/v1/comment/list-all-paging?page=1&size=2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODMzNjcwMDIsImlkIjoxLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODM0NTM0MDIsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9._sWh6QVN8ERHPgWnyMFDg6k-t6gtLI4y4GVRJiDUN2NYdrSWQqZAdyWsW09H3Ji3ks0G1AWsFrMSgQoShwV0Mw
 
 

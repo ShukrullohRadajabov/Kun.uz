@@ -35,16 +35,16 @@ public class SavedArticleService {
 //            throw new ItemNotFoundException("Item not found");
 //        }
 //        savedArticleRepository.deleteSavedArticle(articleId, ownerId);
-        int i = savedArticleRepository.deleteSavedArticle(articleId, ownerId);
+      //  int i = savedArticleRepository.deleteSavedArticle(articleId, ownerId);
         return true;
     }
 
     public List<SavedArticleResponseDTO> getAll(Integer ownerId) {
-        List<SavedArticleEntity> all = savedArticleRepository.getAll(ownerId);
+       // List<SavedArticleEntity> all = savedArticleRepository.getAll(ownerId);
         List<SavedArticleResponseDTO> dtos = new ArrayList<>();
-        all.forEach(savedArticleEntity -> {
-            dtos.add(toDTO(savedArticleEntity));
-        });
+        //all.forEach(savedArticleEntity -> {
+         //   dtos.add(toDTO(savedArticleEntity));
+        //});
         return dtos;
     }
 

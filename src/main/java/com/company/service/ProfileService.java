@@ -1,5 +1,6 @@
 package com.company.service;
 
+import com.company.dto.profile.ProfileShortInfoDTO;
 import com.company.dto.profile.ProfileDTO;
 import com.company.entity.ProfileEntity;
 import com.company.enums.GeneralStatus;
@@ -129,5 +130,12 @@ public class ProfileService {
         }
         profileRepository.deleteById(id);
         return true;
+    }
+    public ProfileShortInfoDTO toShortInfo(ProfileEntity entity) {
+        ProfileShortInfoDTO dto = new ProfileShortInfoDTO();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setSurname(entity.getSurname());
+        return dto;
     }
 }

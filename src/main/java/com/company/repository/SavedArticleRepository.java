@@ -18,10 +18,10 @@ public interface SavedArticleRepository extends
 //    int deleteSavedArticle(@Param("articleId") String articleId, @Param("ownerId") Integer ownerId);
 
 //    Optional<SavedArticleEntity> findAllByArticleIdAndOwnerId(String articleId, Integer ownerId);
-
+/*
     @Query("delete from SavedArticleEntity where articleId =:articleId and ownerId =:ownerId")
-    int deleteSavedArticle(@Param("articleId") String articleId, @Param("ownerId") Integer ownerId);
+    int deleteSavedArticle(@Param("articleId") String articleId, @Param("*//*ownerId") Integer ownerId);*/
 
 //    @Query("from SavedArticleEntity where ownerId =:ownerId")
-    List<SavedArticleEntity> getAll(@Param("ownerId") Integer ownerId);
+//    List<SavedArticleEntity> getAll(@Param("ownerId") Integer ownerId);
 }
