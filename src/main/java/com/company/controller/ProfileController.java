@@ -6,6 +6,7 @@ import com.company.enums.ProfileRole;
 import com.company.exceptions.MethodNotAllowedException;
 import com.company.service.ProfileService;
 import com.company.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -36,19 +37,12 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.create(dto, jwtDTO.getId()));
     }*/
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<ProfileDTO> update(@PathVariable("id") Integer id, @RequestBody ProfileDTO dto,
-                                             @RequestHeader("Authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDTO jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
+    @PutMapping("/private/update/{id}")
+    public ResponseEntity<ProfileDTO> update(@PathVariable("id") Integer id, @RequestBody ProfileDTO dto){
         return ResponseEntity.ok(profileService.update(id, dto));
     }
 
-    @PutMapping("/update2/{id}")
+    @PutMapping("/private/update2/{id}")
     public ResponseEntity<ProfileDTO> update2(@PathVariable("id") Integer id, @RequestBody ProfileDTO dto) {
         return ResponseEntity.ok(profileService.update(id, dto));
     }
@@ -57,26 +51,16 @@ public class ProfileController {
     @GetMapping(value = "/list")
     public ResponseEntity<Page<ProfileDTO>> paging(@RequestParam(value = "page", defaultValue = "1") int page,
                                                    @RequestParam(value = "size", defaultValue = "30") int size,
-                                                   @RequestHeader("Authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDTO jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
+                                                   HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request);
         Page<ProfileDTO> response = profileService.pagination(page, size);
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/private/delete/{id}")
     public ResponseEntity<Boolean> deleteById(@PathVariable("id") Integer id,
-                                                 @RequestHeader("authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDTO jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
+                                              HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request);
         return ResponseEntity.ok(profileService.deleteProfile(id));
     }
 

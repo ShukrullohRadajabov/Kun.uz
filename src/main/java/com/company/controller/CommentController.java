@@ -10,6 +10,7 @@ import com.company.exceptions.MethodNotAllowedException;
 import com.company.mapper.ArticleCommentMapper;
 import com.company.service.CommentService;
 import com.company.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,48 +24,42 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping({"", "/"})
+    @PostMapping({"/public"})
     public ResponseEntity<CommentRequestDTO> create(@RequestBody CommentRequestDTO dto,
-                                                    @RequestHeader("Authorization") String authorization) {
-        JwtDTO jwtDTO = JwtUtil.getJwtUtil(authorization, ProfileRole.ADMIN,
+                                                    HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN,
                 ProfileRole.MODERATOR, ProfileRole.USER, ProfileRole.PUBLISHER);
-        return ResponseEntity.ok(commentService.create(dto, jwtDTO.getId()));
+        Integer prtId = (Integer) request.getAttribute("id");
+        return ResponseEntity.ok(commentService.create(dto, prtId));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("public/update/{id}")
     public ResponseEntity<Boolean> update(@PathVariable("id") Integer id,
                                           @RequestBody CommentUpdateRequestDTO dto,
-                                          @RequestHeader("Authorization") String authorization) {
-        JwtDTO jwtDTO = JwtUtil.getJwtDTO(authorization);
-        return ResponseEntity.ok(commentService.update(id, dto, jwtDTO.getId()));
+                                          HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
+        Integer prtId = (Integer) request.getAttribute("id");
+        return ResponseEntity.ok(commentService.update(id, dto, prtId));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Integer id,
-                                          @RequestHeader("Authorization") String authorization) {
-        JwtDTO jwtDTO = JwtUtil.getJwtDTO(authorization);
-        return ResponseEntity.ok(commentService.delete(id, jwtDTO.getId()));
+                                          HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
+        Integer prtId = (Integer) request.getAttribute("id");
+        return ResponseEntity.ok(commentService.delete(id, prtId));
     }
 
-    @GetMapping(value = "/list/{id}")
+    @GetMapping(value = "/public/list/{id}")
     public ResponseEntity<?> getList(@PathVariable("id")String articleId) {
         return ResponseEntity.ok(commentService.getCommentList(articleId));
     }
 
-    @GetMapping(value = "/list-all-paging")
+    @GetMapping(value = "/private/list-all-paging")
     public ResponseEntity<?> getAll(@RequestParam(value = "page", defaultValue = "1") int page,
                                     @RequestParam(value = "size", defaultValue = "10") int size,
-                                    @RequestHeader("Authorization") String authorization) {
-        JwtDTO dto = JwtUtil.getJwtUtil(authorization, ProfileRole.ADMIN);
+                                    HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         return ResponseEntity.ok(commentService.getAll(page, size));
     }
-
-
-//    @GetMapping(value = "/get-saved-articles")
-//    public ResponseEntity<?> getAll(@RequestHeader("Authorization") String authorization) {
-//        JwtDTO jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.ADMIN,
-//                ProfileRole.MODERATOR, ProfileRole.USER,ProfileRole.PUBLISHER );
-//        List<SavedArticleResponseDTO> list = commentService.getAll(jwtDTO.getId());
-//        return ResponseEntity.ok(list);
-//    }
 }

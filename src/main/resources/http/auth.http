@@ -3,7 +3,7 @@ POST localhost:8080/api/v1/auth
 Content-Type:  application/json
 
 {
-  "email": "alish@mail.ru",
+  "email": "adminjon_mazgi@gmail.com",
   "password": "12345"
 }
 
@@ -13,9 +13,9 @@ POST localhost:8080/api/v1/auth/registration
 Content-Type:  application/json
 
 {
-  "name": "User",
-  "surname": "User",
-  "email": "user@mail.ru",
+  "name": "Alish",
+  "surname": "Aliyev",
+  "email": "harunzulkifl@gmail.com",
   "phone": "12345",
   "password": "12345"
 }

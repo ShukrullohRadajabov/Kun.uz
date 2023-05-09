@@ -6,6 +6,7 @@ import com.company.enums.ProfileRole;
 import com.company.exceptions.MethodNotAllowedException;
 import com.company.service.RegionService;
 import com.company.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,46 +20,30 @@ public class RegionController {
     @Autowired
     private RegionService regionService;
 
-    @PostMapping("")
+    @PostMapping("/private")
     public ResponseEntity<RegionDTO> create(@RequestBody @Valid RegionDTO dto,
-                                            @RequestHeader("Authorization") String authorization) {
-        JwtDTO jwt = JwtUtil.getJwtUtil(authorization, ProfileRole.ADMIN);
+                                            HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request);
         return ResponseEntity.ok(regionService.create(dto));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/private/update/{id}")
     public ResponseEntity<RegionDTO> update(@PathVariable("id") Integer id, @RequestBody RegionDTO dto,
-                                            @RequestHeader("Authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDTO jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
+                                            HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request);
         return ResponseEntity.ok(regionService.update(id, dto));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/private/delete/{id}")
     public ResponseEntity<Boolean> deleteById(@PathVariable("id") Integer id,
-                                              @RequestHeader("authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDTO jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
+                                              HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request);
         return ResponseEntity.ok(regionService.deleteProfile(id));
     }
 
 
-    @GetMapping(value = "/list")
-    public ResponseEntity<List<RegionDTO>> getList(@RequestHeader("Authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDTO jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
+    @GetMapping(value = "/private/list")
+    public ResponseEntity<List<RegionDTO>> getList(){
         List<RegionDTO> response = regionService.getList();
         return ResponseEntity.ok(response);
     }

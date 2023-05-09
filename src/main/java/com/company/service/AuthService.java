@@ -21,8 +21,12 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
+
+
     @Autowired
-    ProfileRepository profileRepository;
+    private MailSenderService mailSenderService;
+    @Autowired
+    private ProfileRepository profileRepository;
     public AuthResponseDTO login(AuthDTO dto){
         Optional<ProfileEntity> optional = profileRepository.findByEmailAndPasswordAndVisible(dto.getEmail(), MD5Util.getMd5Hash(dto.getPassword()), true);
         if (optional.isEmpty()) {
@@ -70,6 +74,7 @@ public class AuthService {
         entity.setPassword(MD5Util.getMd5Hash(dto.getPassword()));
         entity.setStatus(GeneralStatus.REGISTER);
         profileRepository.save(entity);
+        mailSenderService.sendEmail(dto.getEmail(), "Registration", "Mazgi qaliysan");
         String s = "Verification link was sent to email: "+dto.getEmail();
         return new RegistrationResponseDTO(s);
     }
@@ -95,4 +100,6 @@ public class AuthService {
             throw new AppBadRequestException("Phone qani?");
         }
     }
+
+
 }

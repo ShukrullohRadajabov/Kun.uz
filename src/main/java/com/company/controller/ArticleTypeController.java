@@ -6,6 +6,7 @@ import com.company.enums.ProfileRole;
 import com.company.exceptions.MethodNotAllowedException;
 import com.company.service.ArticleTypeService;
 import com.company.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,34 +20,24 @@ public class ArticleTypeController {
     @Autowired
     private ArticleTypeService articleTypeService;
 
-    @PostMapping("")
+    @PostMapping("/private")
     public ResponseEntity<ArticleTypeDTO> create(@RequestBody @Valid ArticleTypeDTO dto,
-                                            @RequestHeader("Authorization") String authorization) {
-        JwtDTO jwt = JwtUtil.getJwtUtil(authorization, ProfileRole.ADMIN);
+                                                 HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         return ResponseEntity.ok(articleTypeService.create(dto));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/private/update/{id}")
     public ResponseEntity<ArticleTypeDTO> update(@PathVariable("id") Integer id, @RequestBody ArticleTypeDTO dto,
-                                            @RequestHeader("Authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDTO jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
+                                           HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request,  ProfileRole.ADMIN);
         return ResponseEntity.ok(articleTypeService.update(id, dto));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/private/delete/{id}")
     public ResponseEntity<Boolean> deleteById(@PathVariable("id") Integer id,
-                                              @RequestHeader("authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDTO jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
+                                              HttpServletRequest request) {
+       JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         return ResponseEntity.ok(articleTypeService.deleteProfile(id));
     }
 
@@ -69,7 +60,7 @@ public class ArticleTypeController {
         return ResponseEntity.ok(response);
     }*/
 
-    @PutMapping(value = "/getByLang/{lang}")
+    @PutMapping(value = "/public/getByLang/{lang}")
     public ResponseEntity<List<String>> getByLang(@PathVariable("lang") String lang) {
         List<String> list = articleTypeService.getByLang(lang);
         return ResponseEntity.ok(list);
